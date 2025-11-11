@@ -1,0 +1,17 @@
+# Utilizamos la imagen de Python alpine como base
+FROM python:3.12.2-alpine
+
+# Establecemos el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copiamos el archivo de requisitos e instalamos las dependencias
+COPY app/requirements.txt /app
+RUN pip install -r requirements.txt
+
+
+# Copiamos el resto del código de la aplicación
+COPY app /app
+
+ENV FLASK_APP=app.py
+
+CMD celery -A tasks beat & celery -A tasks worker --loglevel=info --pool=solo

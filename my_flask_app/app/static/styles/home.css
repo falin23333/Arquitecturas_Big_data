@@ -1,0 +1,205 @@
+
+@font-face {
+    font-family: 'PressStart';
+    src: url('../fonts/PressStart2P-Regular.ttf') format('truetype');
+}
+
+
+
+
+body {
+    font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
+    font-weight: 100;
+    color: #ffffff;
+    
+    text-shadow: 2px 2px #1e357e;
+}
+.presentation {
+    text-align: center;
+    padding: 40px 20px;
+    background: #000000;
+    color: #00ffcc;
+    border-bottom: 4px solid #00cc99;
+}
+.presentation_inicio {
+    display: flex; /* Utiliza el modelo de caja flexible para el contenido */
+    justify-content: flex-start; /* Centra horizontalmente el contenido */
+    align-items:flex-start;
+    text-align: center;
+    
+    color: #00ffcc;
+    flex-direction: column;
+    
+    
+}
+
+.presentation h1 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.presentation p {
+    font-size: 0.8rem;
+}
+.content {
+    display: flex; /* Utiliza el modelo de caja flexible para el contenido */
+    justify-content: flex-start; /* Centra horizontalmente el contenido */
+    align-items:flex-start; /* Centra verticalmente el contenido */
+    height: 100%; /* Establece la altura del contenido al 100% de la ventana gráfica */
+    background-color: #000000; /* Establece el color de fondo del contenido */
+    flex-direction: column; /* Organiza los elementos hijos en columnas */
+    gap: 20px; /* espacio entre las cajas */
+    padding: 20px;
+
+}
+
+
+
+
+.box3 {
+    background-color: #abad23;
+    border-radius: 10px;
+    font-size: small;
+    padding: 20px;
+    margin-bottom: 15px;
+    text-align: justify;
+    box-shadow: 0 0 20px rgba(159, 173, 30, 0.4);
+    border: 2px solid #00ffcc;
+
+}
+
+.contenido2 {
+    display: flex; /* Utiliza el modelo de caja flexible para el contenido */
+    justify-content: flex-start; /* Centra horizontalmente el contenido */
+    align-items:flex-start;
+    flex-direction: column;
+    
+    height: auto; /* Establece la altura del contenido al 100% de la ventana gráfica */
+    background-color: #000000; /* Establece el color de fondo del contenido */
+    flex-direction: row; /* Organiza los elementos hijos en columnas */
+    gap: 20px; /* espacio entre las cajas */
+    padding: 20px;
+    
+
+}
+.box {
+    background-color:transparent;
+    border: 2px solid #00ffcc;
+    font-size: small;
+    border-radius: 10px;
+    padding: 40px;
+    width: auto;
+    margin: 0 auto;
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.box h1{
+    color: #ffffff;
+    font-size: medium;
+}
+.box2 {
+    background-color:  #224740;
+    border: 2px solid #00ffcc;
+    color: #ffffff;
+    border-radius: 10px;
+    font-size: small;
+    padding: 40px;
+    width: 350px;
+    margin: 0 auto;
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+    
+    margin-left: 20px;
+}
+.container {
+    text-align: center; /* Centra el texto dentro del contenedor */
+}
+
+.url-Input {
+    width: 300px; /* Establece el ancho del campo de entrada de URL */
+    padding: 10px; /* Añade relleno alrededor del campo de entrada */
+    font-size: 16px; /* Establece el tamaño de fuente del campo de entrada */
+    border: 4px solid #00ffcc; /* Establece un borde de 1px sólido con un color gris claro */
+    border-radius: 5px; /* Aplica esquinas redondeadas al campo de entrada */
+    margin-bottom: 20px; /* Añade margen inferior para separar el campo de entrada del botón */
+    font-family: 'Press Start 2P', cursive;
+    background-color: #253b64;
+}
+
+.submit-btn {
+    font-family: 'Press Start 2P', cursive;
+    background-color: #00ffcc; /* Establece el color de fondo del botón de envío */
+    color: rgb(0, 0, 0); /* Establece el color del texto del botón de envío */
+    padding: 10px 20px; /* Añade relleno alrededor del texto del botón de envío */
+    font-size: 16px; /* Establece el tamaño de fuente del texto del botón de envío */
+    border: none; /* Elimina el borde del botón de envío */
+    border-radius: 5px; /* Aplica esquinas redondeadas al botón de envío */
+    cursor: pointer; /* Cambia el cursor a un puntero al pasar sobre el botón */
+    transition: background-color 0.3s; /* Agrega una transición suave al color de fondo del botón */
+    align-items: center;
+}
+
+.submit-btn:hover {
+    background-color: #053106; /* Cambia el color de fondo del botón cuando se pasa sobre él */
+}
+
+.container {
+    text-align: center; /* Centra el texto dentro del contenedor */
+    margin-bottom: 20px; /* Añade margen inferior para separar el formulario del resultado */
+}
+.box3 ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: 'Press Start 2P', cursive; 
+}
+
+.box3 li {
+    display: grid;
+    grid-template-columns: 1fr 40px; 
+    align-items: center;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.box2 ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: 'Press Start 2P', cursive; 
+}
+
+.box2 li {
+    display: grid;
+    grid-template-columns: 1fr 40px; 
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.box h2{
+    color:yellow;
+}
+.box h3{
+    color: 00ffcc;
+}
+.box h5{
+    color: rgb(255, 255, 255);
+    font-size: small;
+}
+.box_intro{
+    display: flex; /* Utiliza el modelo de caja flexible para el contenido */
+    justify-content: flex-start; /* Centra horizontalmente el contenido */
+    align-items:flex-start;
+    flex-direction: column;
+    background-color:transparent;
+    border: 2px solid #00ffcc;
+    font-size: small;
+    border-radius: 10px;
+    padding: 40px;
+    width: auto;
+    margin: 0 auto;
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+    
+    color: #ffffff;
+    align-items: center;
+}
