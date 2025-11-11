@@ -19,7 +19,7 @@ Este proyecto implementa una arquitectura de procesamiento asíncrono:
 - Tener instalado [Docker](https://www.docker.com/)
 - Clonar este repositorio:
   ```bash
-  git clone https://github.com/tuusuario/Arquitecturas_Big_data.git
+  git clone https://github.com/falin23333/Arquitecturas_Big_data.git
   cd tu_proyecto
   docker-compose up --build
 ## 🗂 Estructura del Proyecto
