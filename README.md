@@ -1,8 +1,8 @@
-# 🚀 Flask + Celery + Redis + Supabase
+#  Flask + Celery + Redis + Supabase
 
 Aplicación Flask conectada a Redis y Supabase, utilizando Celery para procesamiento asíncrono de tareas.
 
-## 📌 Descripción
+##  Descripción
 Este proyecto implementa una arquitectura de procesamiento asíncrono:
 
 - **Flask**: Servidor web que recibe solicitudes HTTP.  
@@ -15,7 +15,7 @@ Este proyecto implementa una arquitectura de procesamiento asíncrono:
 1. Flask recibe URLs desde un formulario web.  
 2. Las inserta en Redis como cola de tareas.  
 3. Celery consume los elementos de la cola y los inserta en Supabase.
-## 🧩 Requisitos
+##  Requisitos
 - Tener instalado [Docker](https://www.docker.com/)
 - Clonar este repositorio:
   ```bash
