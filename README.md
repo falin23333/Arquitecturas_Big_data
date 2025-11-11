@@ -15,7 +15,13 @@ Este proyecto implementa una arquitectura de procesamiento asíncrono:
 1. Flask recibe URLs desde un formulario web.  
 2. Las inserta en Redis como cola de tareas.  
 3. Celery consume los elementos de la cola y los inserta en Supabase.
-
+## 🧩 Requisitos
+- Tener instalado [Docker](https://www.docker.com/)
+- Clonar este repositorio:
+  ```bash
+  git clone https://github.com/tuusuario/Arquitecturas_Big_data.git
+  cd tu_proyecto
+  docker-compose up --build
 ## 🗂 Estructura del Proyecto
 
 ```text
