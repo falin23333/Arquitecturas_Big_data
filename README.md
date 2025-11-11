@@ -26,27 +26,28 @@ Este proyecto implementa una arquitectura de **procesamiento asíncrono**:
 ## 🗂 Estructura del Proyecto
 
 my_celery_app/
-├── app/
-│ ├── config.py
-│ ├── tasks.py
-│ └── requirements.txt
-└── dockerfile
+    app/
+        config.py
+        tasks.py
+        requirements.txt
+    Dockerfile
 
 my_flask_app/
-├── app/
-│ ├── pycache/
-│ ├── static/
-│ ├── templates/
-│ │ ├── contenido.html
-│ │ ├── index.html
-│ │ └── welcome.html
-│ ├── app.py
-│ ├── config.py
-│ ├── tasks.py
-│ └── requirements.txt
-└── dockerfile
+    app/
+        __pycache__/
+        static/
+        templates/
+            contenido.html
+            index.html
+            welcome.html
+        app.py
+        config.py
+        tasks.py
+        requirements.txt
+    Dockerfile
 
 docker-compose.yml
+
 
 ## 🧩 Requisitos
 - Tener instalado [Docker](https://www.docker.com/)
