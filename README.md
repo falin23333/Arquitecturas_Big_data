@@ -49,12 +49,6 @@ my_flask_app/
 docker-compose.yml
 
 
-## 🧩 Requisitos
-- Tener instalado [Docker](https://www.docker.com/)
-- Clonar este repositorio:
-  ```bash
-  git clone https://github.com/tuusuario/Arquitecturas_Big_data.git
-  cd tu_proyecto
-  docker-compose up --build
+
   
 
