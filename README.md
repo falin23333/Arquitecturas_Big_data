@@ -1,30 +1,24 @@
 # 🚀 Flask + Celery + Redis + Supabase
 
-
-
-Aplicación **Flask** conectada a **Redis** y **Supabase**, utilizando **Celery** para procesamiento asíncrono de tareas.
-
----
+Aplicación Flask conectada a Redis y Supabase, utilizando Celery para procesamiento asíncrono de tareas.
 
 ## 📌 Descripción
-
-Este proyecto implementa una arquitectura de **procesamiento asíncrono**:
+Este proyecto implementa una arquitectura de procesamiento asíncrono:
 
 - **Flask**: Servidor web que recibe solicitudes HTTP.  
 - **Celery**: Worker que procesa tareas en segundo plano de forma asíncrona.  
 - **Redis**: Broker de mensajes y almacenamiento temporal de URLs.  
-- **Supabase (PostgreSQL)**: Base de datos para persistir URLs procesadas.
+- **Supabase (PostgreSQL)**: Base de datos para persistir URLs procesadas.  
 
-**Flujo de la aplicación**:
+**Flujo de la aplicación:**
 
 1. Flask recibe URLs desde un formulario web.  
 2. Las inserta en Redis como cola de tareas.  
 3. Celery consume los elementos de la cola y los inserta en Supabase.
 
----
-
 ## 🗂 Estructura del Proyecto
 
+```text
 my_celery_app/
     app/
         config.py
