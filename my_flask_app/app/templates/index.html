@@ -21,7 +21,6 @@
             <p>Celery permite procesar los lotes aplicando "trabajadores" para volcar los datos de forma asíncrona y escalable.</p>
             <p>Tenemos una base de datos PostgreSQL gestionada con Supabase, con dos tablas relacionadas: <strong>users</strong> y <strong>tracked_urls</strong>, de modo que podemos saber qué URLs introdujo cada usuario.</p>
             <p>Cada minuto, los trabajadores Celeris recogen los datos de Redis para volcarlos en PostgreSQL, y a la vez extraen los valores almacenados siguiendo una pila FIFO.</p>
-            <p>Combinado con el escalado vertical, mejora el rendimiento y la resiliencia, permitiendo construir sistemas robustos y eficientes en entornos con gran demanda de consultas.</p>
             <p>Cuando el usuario inicia sesión, puede ver las URLs que ha añadido. Si agrega una URL nueva, esta se almacenará temporalmente en la caché hasta que el trabajador la registre en la base de datos Postgres.</p>
             <p>Cada minuto se realiza un volcado de hasta 5 URLs en la base de datos; si hay más de 5, las restantes deberán esperar al siguiente ciclo.</p>
             </div>
