@@ -205,7 +205,6 @@ def display_url(url=None):
 @app.route("/contenido",methods=["GET","POST"])
 def contenido():
     idd = session.get("idd") #recupero la variable nombre idd[0]=id, idd[1]=nombre
-    
     tracked_urls_user = []
     if idd:
         if request.method=="POST":
@@ -213,8 +212,6 @@ def contenido():
             
             if url and is_valid_url(url):
                 insert_url_to_redis(url,idd[0])
-                
-                
             else:
                 return "Urls no valida"
             
