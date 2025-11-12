@@ -214,11 +214,11 @@ def contenido():
                 insert_url_to_redis(url,idd[0])
             else:
                 return "Urls no valida"
-            
+        top_users,tracked_urls_user, top_urlss = [],[],[]
         tracked_data=get_tracke_url_from_redis()
-        top_users = top_users_post()
-        tracked_urls_user = find_urls_from_user_to_database(idd[0])   
-        top_urlss = top_urls()
+        #top_users = top_users_post()
+        #tracked_urls_user = find_urls_from_user_to_database(idd[0])   
+        #top_urlss = top_urls()
     return render_template("contenido.html",tracked_data = tracked_data,tracked_urls_user=tracked_urls_user, idd= idd,top_users=top_users,top_urlss=top_urlss)
 
 if __name__ == "__main__":
