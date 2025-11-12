@@ -66,7 +66,7 @@ def move_from_redis_to_postgres():
     
     if len(urls)>0:
         insert_urls_to_database(urls)
-        # Guardamos los últimos URLs en un JSON
+        
        
 app_Celery.conf.beat_schedule = {
     "cada-diez-segundos":{
