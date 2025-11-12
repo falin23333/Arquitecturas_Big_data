@@ -74,7 +74,7 @@ body {
     align-items:flex-start;
     flex-direction: column;
     height: 100%;
-    height: auto; /* Establece la altura del contenido al 100% de la ventana gráfica */
+    
     background-color: #000000; /* Establece el color de fondo del contenido */
     flex-direction: row; /* Organiza los elementos hijos en columnas */
     gap: 20px; /* espacio entre las cajas */
