@@ -213,10 +213,7 @@ def contenido():
             
             if url and is_valid_url(url):
                 insert_url_to_redis(url,idd[0])
-                tracked_data=get_tracke_url_from_redis()
-                top_users = top_users_post()
-                tracked_urls_user = find_urls_from_user_to_database(idd[0])   
-                top_urlss = top_urls()
+                
                 
             else:
                 return "Urls no valida"
