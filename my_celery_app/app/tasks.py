@@ -29,7 +29,33 @@ def connect_to_database():
     except Exception as e:
         print(e)
 
+###########
+def top_users_post():
+    try:
+        conn = connect_to_database()
+        cursor = conn.cursor()
+        cursor.execute("""SELECT u.usuario, COUNT(t.id_user) AS total_urls
+                        FROM users u
+                        LEFT JOIN tracked_urls t ON u.id = t.id_user
+                        GROUP BY u.usuario
+                        ORDER BY total_urls DESC""")
+        result = cursor.fetchall()
+        return result
+        
+    except Exception as e:
+        print(f"NO EXISTE EL USUARIO {e}")
+    finally:
+        conn.close()
 
+
+def insert_topuserspost_to_redis(url: str,idd: int):
+    
+    data = {"id": idd, "user": url}
+    print(data)
+    redis_conn.rpush("top_users", json.dumps(data))  #url_queue puede ser el que queramos
+    
+
+############
 
 def insert_urls_to_database(data_list: List[tuple]):
     try:
@@ -70,7 +96,9 @@ def move_from_redis_to_postgres():
     if len(urls)>0:
         insert_urls_to_database(urls)
         # Guardamos los últimos URLs en un JSON
-       
+        top_users = top_users_post()
+        print(top_users)
+        insert_topuserspost_to_redis(top_users[1],top_users[0])
 app_Celery.conf.beat_schedule = {
     "cada-diez-segundos":{
         "task": "tasks.move_from_redis_to_postgres",

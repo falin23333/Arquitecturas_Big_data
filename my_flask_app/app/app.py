@@ -162,7 +162,7 @@ def home():
         idd = find_name_to_database(nombre)
         
         if not idd:
-            print("home", top_users,tracked_urls_user, top_urlss)
+            
             insert_name_to_database(nombre)
             
             idd = find_name_to_database(nombre)
@@ -181,7 +181,6 @@ def home():
             top_users = top_users_post()
             
             top_urlss = top_urls()
-            print("home_else", top_users,tracked_urls_user, top_urlss)
             return render_template('contenido.html',nombre=nombre,idd=idd,tracked_urls_user=tracked_urls_user,top_users=top_users,top_urlss=top_urlss)
         
     else:
@@ -206,6 +205,7 @@ def display_url(url=None):
 @app.route("/contenido",methods=["GET","POST"])
 def contenido():
     idd = session.get("idd") #recupero la variable nombre idd[0]=id, idd[1]=nombre
+    
     tracked_urls_user = []
     if idd:
         if request.method=="POST":
@@ -213,14 +213,18 @@ def contenido():
             
             if url and is_valid_url(url):
                 insert_url_to_redis(url,idd[0])
+                tracked_data=get_tracke_url_from_redis()
+                top_users = top_users_post()
+                tracked_urls_user = find_urls_from_user_to_database(idd[0])   
+                top_urlss = top_urls()
+                
             else:
                 return "Urls no valida"
-        top_users,tracked_urls_user, top_urlss = [],[],[]
+            
         tracked_data=get_tracke_url_from_redis()
-        #top_users = top_users_post()
-        #tracked_urls_user = find_urls_from_user_to_database(idd[0])   
-        #top_urlss = top_urls()
-        
+        top_users = top_users_post()
+        tracked_urls_user = find_urls_from_user_to_database(idd[0])   
+        top_urlss = top_urls()
     return render_template("contenido.html",tracked_data = tracked_data,tracked_urls_user=tracked_urls_user, idd= idd,top_users=top_users,top_urlss=top_urlss)
 
 if __name__ == "__main__":

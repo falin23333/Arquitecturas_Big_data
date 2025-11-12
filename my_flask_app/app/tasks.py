@@ -57,7 +57,33 @@ def get_tracked_urls_from_redis(count: int):
             print(f"Error al procesar item: {item} -> {e}")
 
     return tracked_data
+###########
+def top_users_post():
+    try:
+        conn = connect_to_database()
+        cursor = conn.cursor()
+        cursor.execute("""SELECT u.usuario, COUNT(t.id_user) AS total_urls
+                        FROM users u
+                        LEFT JOIN tracked_urls t ON u.id = t.id_user
+                        GROUP BY u.usuario
+                        ORDER BY total_urls DESC""")
+        result = cursor.fetchall()
+        return result
+        
+    except Exception as e:
+        print(f"NO EXISTE EL USUARIO {e}")
+    finally:
+        conn.close()
 
+
+def insert_topuserspost_to_redis(url: str,idd: int):
+    
+    data = {"id": idd, "user": url}
+    print(data)
+    redis_conn.rpush("top_users", json.dumps(data))  #url_queue puede ser el que queramos
+    
+
+############
 
 
 @app_Celery.task
@@ -66,8 +92,6 @@ def move_from_redis_to_postgres():
     
     if len(urls)>0:
         insert_urls_to_database(urls)
-        
-        
        
 app_Celery.conf.beat_schedule = {
     "cada-diez-segundos":{
