@@ -160,7 +160,7 @@ def home():
     if request.method == 'POST':
         nombre = request.form.get('url_input')
         idd = find_name_to_database(nombre)
-        
+        print("home", top_users,tracked_urls_user, top_urlss)
         if not idd:
             
             insert_name_to_database(nombre)
@@ -181,6 +181,7 @@ def home():
             top_users = top_users_post()
             
             top_urlss = top_urls()
+            print("home_else", top_users,tracked_urls_user, top_urlss)
             return render_template('contenido.html',nombre=nombre,idd=idd,tracked_urls_user=tracked_urls_user,top_users=top_users,top_urlss=top_urlss)
         
     else:
