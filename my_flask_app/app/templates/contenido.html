@@ -51,7 +51,7 @@
             <div class="box2">
                 <h4>Urls introducias postgres por {{idd[1]}} :</h4>
                 <ul>
-                {% for item in tracked_urls_user[:10] %}
+                {% for item in tracked_urls_user %}
                     <li><a href="{{ item[1] }}" target="_blank" style="color: inherit; text-decoration: none;">{{ item[1] }}</a></li>
                 {% endfor %}
                 </ul>
@@ -71,7 +71,7 @@
             <div class="box2">
                 <h4>Top URLS introducidas:</h4>
                 <ul>
-                {% for item in top_urlss %}
+                {% for item in top_urlss[:10] %}
                     <li>
                         <span class="user-name">{{ item[0] }}</span>
                         <span class="user-posts">{{ item[1] }}</span>
