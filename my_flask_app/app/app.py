@@ -172,7 +172,7 @@ def home():
             top_users = top_users_post()
             
             top_urlss = top_urls()
-            return render_template('contenido.html',nombre=nombre, idd=idd,tracked_urls_user=tracked_urls_user[:10],top_users=top_users[:10],top_urlss=top_urlss)
+            return render_template('contenido.html',nombre=nombre, idd=idd,tracked_urls_user=tracked_urls_user,top_users=top_users,top_urlss=top_urlss)
         else:
             
             tracked_urls_user = find_urls_from_user_to_database(idd[0])
