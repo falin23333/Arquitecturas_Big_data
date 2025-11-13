@@ -38,7 +38,7 @@
         <div class="contenido2">
             <!-- Caja 1: Datos del usuario -->
             <div class="box3">
-                <h4>Urls en caché :</h4>
+                <h4>Urls en caché from Redis:</h4>
                 <ul>
                 {% for item in tracked_data %}
                     <li><a href="{{ item }}" target="_blank" style="color: inherit; text-decoration: none;">{{ item }}</a></li>
@@ -49,8 +49,13 @@
             
             <!-- Caja 2: Información urls -->
             <div class="box2">
-                <h4>Urls introducias postgres por {{idd[1]}} :</h4>
+                <h4>Urls PostgreSQL introducias por {{idd[1]}} :</h4>
+                <form id="urlForm1" method="post" action="/ver"> 
+                    <br>
+                    <button type="submit" id="checkUrlButton1" class="submit-btn">Ver</button>
+                </form>
                 <ul>
+                
                 {% for item in tracked_urls_user %}
                     <li><a href="{{ item[1] }}" target="_blank" style="color: inherit; text-decoration: none;">{{ item[1] }}</a></li>
                 {% endfor %}

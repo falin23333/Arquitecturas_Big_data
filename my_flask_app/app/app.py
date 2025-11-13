@@ -7,7 +7,7 @@ import psycopg2
 from zoneinfo import ZoneInfo
 import json
 import os
-from tasks import get_tracked_urls_from_redis
+
 "docker run -d --name redis-stack-5 -p 6379:6379 -p 8001:8001 redis/redis-stack:latest"
 REDIS_HOST = os.getenv("REDIS_HOST", "redis")
 REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
@@ -80,6 +80,38 @@ def get_tracke_url_from_redis():
         except Exception as e:
             print(f"Error al procesar item: {item} -> {e}")
     return tracked_data
+
+def get_tracke_top_url_from_redis():
+    pipe = redis_conn.pipeline()
+    pipe.lrange("top_urls", 0, -1)
+    urls_tracked_from_redis = pipe.execute()
+    url_items = urls_tracked_from_redis[0] or []
+
+    tracked_data = []
+    for item in url_items:
+        try:
+            data = json.loads(item)  # decode JSON
+            tracked_data.append((data["url"], data["visits"]))
+        except Exception as e:
+            print(f"Error al procesar item: {item} -> {e}")
+    return tracked_data
+
+
+def get_tracke_top_users_from_redis():
+    pipe = redis_conn.pipeline()
+    pipe.lrange("top_users", 0, -1)
+    users_tracked_from_redis = pipe.execute()
+    users_items = users_tracked_from_redis[0] or []
+
+    tracked_data = []
+    for item in users_items:
+        try:
+            data = json.loads(item)
+            tracked_data.append((data["username"], data["count"]))
+        except Exception as e:
+            print(f"Error al procesar item: {item} -> {e}")
+    return tracked_data
+
 #################################
 
 
@@ -122,38 +154,14 @@ def find_urls_from_user_to_database(id_user: int):
         print(f"NO EXISTE EL USUARIO {e}")
     finally:
         conn.close()
-def top_users_post():
-    try:
-        conn = connect_to_database()
-        cursor = conn.cursor()
-        cursor.execute("""SELECT u.usuario, COUNT(t.id_user) AS total_urls
-                        FROM users u
-                        LEFT JOIN tracked_urls t ON u.id = t.id_user
-                        GROUP BY u.usuario
-                        ORDER BY total_urls DESC""")
-        result = cursor.fetchall()
-        return result
-        
-    except Exception as e:
-        print(f"NO EXISTE EL USUARIO {e}")
-    finally:
-        conn.close()
-def top_urls():
-    try:
-        conn = connect_to_database()
-        cursor = conn.cursor()
-        cursor.execute("""SELECT url, COUNT(*) AS total_veces FROM 
-                        tracked_urls GROUP BY url ORDER BY total_veces DESC;""")
-        result = cursor.fetchall()
-        return result
-        
-    except Exception as e:
-        print(f"NO EXISTE EL USUARIO {e}")
-    finally:
-        conn.close()
+
 def is_valid_url(url: str) -> bool:
     pattern = r"^(https?:\/\/)?(www\.)?[a-zA-Z0-9]+\.[a-zA-Z]+$"
     return bool(re.fullmatch(pattern, url))  # Comprueba si la URL cumple el patrón
+
+#########################################code################################################
+###############################################################################################
+
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
@@ -167,20 +175,21 @@ def home():
             
             idd = find_name_to_database(nombre)
             
-            tracked_urls_user = find_urls_from_user_to_database(idd[0])
+            #tracked_urls_user = find_urls_from_user_to_database(idd[0])
+            tracked_urls_user = []
             session["idd"] = idd
-            top_users = top_users_post()
+            top_users = get_tracke_top_users_from_redis()
             
-            top_urlss = top_urls()
+            top_urlss = get_tracke_top_url_from_redis()
             return render_template('contenido.html',nombre=nombre, idd=idd,tracked_urls_user=tracked_urls_user,top_users=top_users,top_urlss=top_urlss)
         else:
             
-            tracked_urls_user = find_urls_from_user_to_database(idd[0])
-            
+            #tracked_urls_user = find_urls_from_user_to_database(idd[0])
+            tracked_urls_user = [] 
             session["idd"] = idd
-            top_users = top_users_post()
+            top_users = get_tracke_top_users_from_redis()
             
-            top_urlss = top_urls()
+            top_urlss = get_tracke_top_url_from_redis()
             return render_template('contenido.html',nombre=nombre,idd=idd,tracked_urls_user=tracked_urls_user,top_users=top_users,top_urlss=top_urlss)
         
     else:
@@ -211,21 +220,32 @@ def contenido():
         if request.method=="POST":
             url = request.form.get("urlinput")
             
+            
             if url and is_valid_url(url):
                 insert_url_to_redis(url,idd[0])
-                tracked_data=get_tracke_url_from_redis()
-                top_users = top_users_post()
-                tracked_urls_user = find_urls_from_user_to_database(idd[0])   
-                top_urlss = top_urls()
+                
                 
             else:
                 return "Urls no valida"
             
         tracked_data=get_tracke_url_from_redis()
-        top_users = top_users_post()
-        tracked_urls_user = find_urls_from_user_to_database(idd[0])   
-        top_urlss = top_urls()
+        top_users = get_tracke_top_users_from_redis()
+        #tracked_urls_user = find_urls_from_user_to_database(idd[0])   
+        tracked_urls_user = []
+        top_urlss = get_tracke_top_url_from_redis()
     return render_template("contenido.html",tracked_data = tracked_data,tracked_urls_user=tracked_urls_user, idd= idd,top_users=top_users,top_urlss=top_urlss)
-
+@app.route("/ver", methods=["POST"])
+def ver():
+    
+    idd = session.get("idd")  
+    
+    # Ejecutas tu función
+    tracked_urls_user = find_urls_from_user_to_database(idd[0])
+    tracked_data=get_tracke_url_from_redis()
+    top_users = get_tracke_top_users_from_redis()
+    #tracked_urls_user = find_urls_from_user_to_database(idd[0])   
+    print("tracked_urls_user")
+    top_urlss = get_tracke_top_url_from_redis()
+    return render_template("contenido.html",tracked_data = tracked_data,tracked_urls_user=tracked_urls_user, idd= idd,top_users=top_users,top_urlss=top_urlss)
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

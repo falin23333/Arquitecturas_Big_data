@@ -14,15 +14,12 @@
             <br>
             <div class="resumen" style="background-color: #0b2721; color: #f0f0f0; padding: 20px; border-radius: 10px; line-height: 1.6; font-size: 10px;">
             <h3>Flask + Celery + Redis + Supabase</h3>
-            <p>Con esta Aplicación en Flask tratamos de poner en práctica cómo gestionar grandes volúmenes de datos.</p>
-            <p>Propone el uso de batching como estrategia clave de optimización, agrupando solicitudes en Redis antes de volcarlas en la base de datos SQL.</p>
-            <p>Esto reduce la carga concurrente y mejora la eficiencia del sistema.</p>
-            <p>Redis actúa como cola de procesamiento y sistema de caché de alta velocidad, almacenando temporalmente los datos.</p>
-            <p>Celery permite procesar los lotes aplicando "trabajadores" para volcar los datos de forma asíncrona y escalable.</p>
-            <p>Tenemos una base de datos PostgreSQL gestionada con Supabase, con dos tablas relacionadas: <strong>users</strong> y <strong>tracked_urls</strong>, de modo que podemos saber qué URLs introdujo cada usuario.</p>
-            <p>Cada minuto, los trabajadores Celeris recogen los datos de Redis para volcarlos en PostgreSQL, y a la vez extraen los valores almacenados siguiendo una pila FIFO.</p>
-            <p>Cuando el usuario inicia sesión, puede ver las URLs que ha añadido. Si agrega una URL nueva, esta se almacenará temporalmente en la caché hasta que el trabajador la registre en la base de datos Postgres.</p>
-            <p>Cada minuto se realiza un volcado de hasta 5 URLs en la base de datos; si hay más de 5, las restantes deberán esperar al siguiente ciclo.</p>
+            <p>Esta aplicación en Flask pone en práctica conceptos de gestión de grandes volúmenes de datos mediante una arquitectura asíncrona y optimizada.</p>
+            <p>Redis actúa como cola de procesamiento y sistema de caché, agrupando temporalmente las solicitudes antes de volcarlas en la base de datos PostgreSQL (gestionada con Supabase).</p>
+            <p>Celery gestiona las operaciones de lectura y escritura mediante workers, optimizando inserciones y consultas SQL de forma asíncrona y escalable.</p>
+            <p>Cada minuto, los trabajadores transfieren los datos de Redis en lotes de 5 registros a PostgreSQL siguiendo una estructura FIFO y actualizan en caché los rankings de Top Users y Top URLs.</p>
+            <p>Los usuarios pueden ver las URLs que han añadido; cada nuevo registro se almacena temporalmente hasta que un worker lo inserta definitivamente en la base de datos.</p>
+
             </div>
         </div>
 

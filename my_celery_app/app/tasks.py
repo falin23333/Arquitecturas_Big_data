@@ -30,6 +30,19 @@ def connect_to_database():
         print(e)
 
 ###########
+def top_urls():
+    try:
+        conn = connect_to_database()
+        cursor = conn.cursor()
+        cursor.execute("""SELECT url, COUNT(*) AS total_veces FROM 
+                        tracked_urls GROUP BY url ORDER BY total_veces DESC;""")
+        result = cursor.fetchall()
+        return result
+        
+    except Exception as e:
+        print(f"NO EXISTE EL USUARIO {e}")
+    finally:
+        conn.close()
 def top_users_post():
     try:
         conn = connect_to_database()
@@ -48,12 +61,20 @@ def top_users_post():
         conn.close()
 
 
-def insert_topuserspost_to_redis(url: str,idd: int):
-    
-    data = {"id": idd, "user": url}
-    print(data)
-    redis_conn.rpush("top_users", json.dumps(data))  #url_queue puede ser el que queramos
-    
+def insert_topuserspost_to_redis(data: List[tuple]):
+    if data:
+        redis_conn.delete("top_users")
+        for row in data:
+            user_dict = {"username": row[0], "count": row[1]}
+            redis_conn.rpush("top_users", json.dumps(user_dict))
+
+
+def insert_topurl_to_redis(data: List[tuple]):
+    if data:
+        redis_conn.delete("top_urls")
+        for row in data:
+            url_dict = {"url": row[0], "visits": row[1]}
+            redis_conn.rpush("top_urls", json.dumps(url_dict))
 
 ############
 
@@ -93,12 +114,15 @@ def get_tracked_urls_from_redis(count:int):
 def move_from_redis_to_postgres():
     urls = get_tracked_urls_from_redis(5)
     
+    
     if len(urls)>0:
         insert_urls_to_database(urls)
         # Guardamos los últimos URLs en un JSON
-        top_users = top_users_post()
-        print(top_users)
-        insert_topuserspost_to_redis(top_users[1],top_users[0])
+    top_users = top_users_post()
+    insert_topuserspost_to_redis(top_users)
+    toop_urls = top_urls()
+    insert_topurl_to_redis(toop_urls)
+   
 app_Celery.conf.beat_schedule = {
     "cada-diez-segundos":{
         "task": "tasks.move_from_redis_to_postgres",
